@@ -28,7 +28,7 @@ class Category extends Model
                 'string',
                 'min:3',
                 'max:255',
-                'unique:categories,name,$id',
+                "unique:categories,name,$id",
                 /* function ($attributes, $value, $fails) {
                       if (strtolower($value) == 'laravel') {
                           $fails("the name can't be $value");

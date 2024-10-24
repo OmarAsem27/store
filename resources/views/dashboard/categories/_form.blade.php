@@ -12,13 +12,7 @@
 
 
 <div class="form-group">
-    <label for="">Category Name</label>
-    <input type="text" name="name" @class(['form-control', 'is-invalid' => $errors->has('name')]) value="{{ old('name', $category->name) }}">
-    {{-- @if ($errors->has('name')) --}}
-    @error('name')
-        {{-- <div class="text-danger">{{ $errors->first('name') }}</div> --}}
-        <div class="text-danger">{{ $message }}</div>
-    @enderror
+    <x-form.input name="name" class="form-control" label="Category Name" :value="$category->name" />
 </div>
 <div class="form-group">
     <label for="">Category Parent</label>
@@ -31,33 +25,19 @@
     </select>
 </div>
 <div class="form-group">
-    <label for="">Description</label>
-    <textarea name="description" class="form-control">{{ old('description', $category->description) }} </textarea>
+    <x-form.textarea label="Description" name="description" :value="$category->description" />
 </div>
 <div class="form-group">
-    <label for="">Image</label>
-    <input type="file" name="image" class="form-control">
+    <x-form.label>Image</x-form.label>
+    <x-form.input type="file" name="image" />
     @if ($category->image)
         <img src="{{ asset('storage/' . $category->image) }}" alt="" height="50px">
     @endif
 </div>
 <div class="form-group">
-    <label for="">Status</label>
+    <x-form.label>Status</x-form.label>
     <div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="exampleRadios1" value="active"
-                @checked(old('status', $category->status) == 'active')>
-            <label class="form-check-label" for="exampleRadios1">
-                Active
-            </label>
-        </div>
-        <div class="form-check">
-            <input class="form-check-input" type="radio" name="status" id="exampleRadios2" value="archived"
-                @checked(old('status', $category->status) == 'archived')>
-            <label class="form-check-label" for="exampleRadios2">
-                Archived
-            </label>
-        </div>
+        <x-form.radio name="status" :checked="$category->status" :options="['active' => 'Active', 'archived' => 'Archived']" />
     </div>
 </div>
 
