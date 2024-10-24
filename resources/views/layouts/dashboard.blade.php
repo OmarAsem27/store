@@ -17,7 +17,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
-    @stack('styles')
+
+    {{-- <link rel="stylesheet" href="{{ asset('css/app.css') }}"> --}}
+    {{-- @stack('styles') --}}
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -179,15 +181,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
-                            alt="User Image">
+                {{-- @if (Auth::check()) --}}
+                @auth
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <img src="{{ asset('dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2"
+                                alt="User Image">
+                        </div>
+                        <div class="info">
+                            <a href="#" class="d-block">{{ Auth::user()->name }} </a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-primary">Logout</button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="info">
-                        <a href="#" class="d-block">Alexander Pierce</a>
-                    </div>
-                </div>
+                @endauth
+                {{-- @endif --}}
 
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
@@ -266,7 +276,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    @stack('scripts')
+    {{-- @stack('scripts') --}}
 
 </body>
 
