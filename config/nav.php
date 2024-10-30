@@ -17,7 +17,7 @@ return [
     ],
     [
         'icon' => 'nav-icon far fa-circle',
-        'link' => 'dashboard.categories.index',
+        'link' => 'dashboard.products.index',
         'title' => 'Products',
         'active' => 'dashboard.products.*'
     ],

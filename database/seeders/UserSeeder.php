@@ -28,5 +28,13 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'phone_number' => '1223456789123'
         ]);
+
+        User::create([
+            'name' => 'Dummy',
+            'email' => 'dummy@g.com',
+            'password' => Hash::make('password'),
+            'phone_number' => '123456744123',
+        ]);
+
     }
 }
