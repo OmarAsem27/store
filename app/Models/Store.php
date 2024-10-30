@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Store extends Model
 {
     use HasFactory;
+
+
+    protected $table = 'stores';
+    protected $primaryKey = 'id';
+    protected $keyType = 'int';
+    public $incrementing = true;
+    public $timesamps = true;
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
