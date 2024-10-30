@@ -57,9 +57,9 @@ class Category extends Model
                 'max:255',
                 "unique:categories,name,$id",
                 /* function ($attributes, $value, $fails) {
-                      if (strtolower($value) == 'laravel') {
-                          $fails("the name can't be $value");
-                      }
+                    if (strtolower($value) == 'laravel') {
+                        $fails("the name can't be $value");
+                    }
                 }*/
                 // new RulesFilter
                 'filter:laravel,php,html'
@@ -76,4 +76,17 @@ class Category extends Model
     {
         return $this->hasMany(Product::class, 'category_id', 'id');
     }
+
+    public function parent()
+    {
+        return $this->belongsTo(Category::class, 'parent_id')->withDefault(['name' => '-']);
+    }
+
+    public function children()
+    {
+        return $this->hasMany(Category::class, 'parent_id');
+    }
+
+
+
 }
