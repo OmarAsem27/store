@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Profile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\Intl\Countries;
+use Symfony\Component\Intl\Locales;
 
 class ProfileController extends Controller
 {
@@ -13,7 +15,9 @@ class ProfileController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        return view('dashboard.profile.edit', compact('user'));
+        $countries = Countries::getNames();
+        $locales = Locales::getNames();
+        return view('dashboard.profile.edit', get_defined_vars());
     }
 
     public function update(Request $request)

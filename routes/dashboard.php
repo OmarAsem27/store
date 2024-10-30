@@ -3,6 +3,7 @@
 use App\Http\Controllers\Dashboard\CategoriesController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StoreController;
 use Illuminate\Support\Facades\Route;
 
@@ -11,6 +12,9 @@ Route::group([
     'as' => 'dashboard.',
     'prefix' => 'dashboard',
 ], function () {
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::get('/', [DashboardController::class, 'index'])
         ->name('dashboard');
 
@@ -24,4 +28,5 @@ Route::group([
     Route::resource('/categories', CategoriesController::class);
     Route::resource('/products', ProductController::class);
     Route::resource('/stores', StoreController::class);
+
 });

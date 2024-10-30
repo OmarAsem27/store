@@ -178,6 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     class="brand-image img-circle elevation-3" style="opacity: .8">
                 <span class="brand-text font-weight-light"> {{ config('app.name') }} </span>
             </a>
+
             <!-- Sidebar -->
             <div class="sidebar">
                 <!-- Sidebar user panel (optional) -->
@@ -189,7 +190,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 alt="User Image">
                         </div>
                         <div class="info">
-                            <a href="#" class="d-block">{{ Auth::user()->name }} </a>
+                            <a href="{{ route('dashboard.profile.edit') }}" class="d-block">{{ Auth::user()->name }} </a>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="btn btn-sm btn-outline-primary">Logout</button>
@@ -214,7 +215,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </div>
             {{-- @include('layouts.partials.nav') --}}
 
-            <x-nav />
+            <x-nav context="side" />
 
             <!-- /.sidebar -->
         </aside>
