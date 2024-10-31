@@ -13,6 +13,17 @@ class Product extends Model
     use HasFactory;
 
 
+    protected $fillable = [
+        'name',
+        'slug',
+        'description',
+        'image',
+        'category_id',
+        'store_id',
+        'price',
+        'compare_price',
+        'status'
+    ];
     protected static function booted()
     {
         // static::addGlobalScope('store', function (Builder $builder) {
@@ -32,5 +43,16 @@ class Product extends Model
     public function store()
     {
         return $this->belongsTo(Store::class);
+    }
+    public function tags()
+    {
+        return $this->belongsToMany(
+            Tag::class,
+            'product_tag',
+            'product_id', // FK in pivot table for the current model
+            'tag_id',
+            'id',
+            'id'
+        );
     }
 }
