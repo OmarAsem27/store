@@ -84,7 +84,7 @@ class ProductController extends Controller
             $tag_ids[] = $tag->id;
         }
         $product->tags()->sync($tag_ids);
-
+        
         return redirect()->route('dashboard.products.index')->with('success', 'Product Updated!');
     }
 
