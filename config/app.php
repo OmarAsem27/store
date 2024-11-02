@@ -127,7 +127,9 @@ return [
     ],
 
     'aliases' => Facade::defaultAliases()->merge([
-        'Currency' => App\Helpers\Currency::class
+        'Currency' => App\Helpers\Currency::class,
+        'authType' => App\Http\Middleware\CheckUserType::class,
+
     ])->toArray(),
 
 ];
