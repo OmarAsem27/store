@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
@@ -55,4 +56,32 @@ class Product extends Model
             'id'
         );
     }
+
+    public function scopeActive(Builder $builder)
+    {
+        $builder->whereStatus('active');
+    }
+
+    // Accessors
+    public function getImageUrlAttribute()
+    {
+        if (!$this->image) {
+            return "https://upload.wikimedia.org/wikipedia/commons/1/14/Product_sample_icon_picture.png";
+        }
+        if (Str::startsWith($this->image, ['http://', 'https://'])) {
+            return $this->image;
+        }
+        return asset("storage/" . $this->image);
+    }
+
+    // Accessors
+    public function getSalePercentAttribute()
+    {
+        if (!$this->compare_price) {
+            return 0;
+        }
+        return number_format(100 - (100 * $this->price / $this->compare_price), 2);
+    }
+
+
 }
