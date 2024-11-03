@@ -32,4 +32,17 @@ class Cart extends Model
     }
 
 
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withDefault([
+            'name' => 'Anonymous'
+        ]);
+    }
+    
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
+
+
 }

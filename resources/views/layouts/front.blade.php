@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/tiny-slider.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/glightbox.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}" />
+    @stack('styles')
 
 </head>
 
@@ -110,7 +111,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-3 col-7">
                         <!-- Start Header Logo -->
-                        <a class="navbar-brand" href="index.html">
+                        <a class="navbar-brand" href="{{ route('home') }}">
                             <img src="{{ asset('assets/images/logo/logo.svg') }}" alt="Logo">
                         </a>
                         <!-- End Header Logo -->
@@ -345,7 +346,7 @@
         <!-- End Header Bottom -->
     </header>
 
-    {{ $breadcrumb ?? ' ' }}
+    {{ $breadcrumb ?? '' }}
 
     {{ $slot }}
 
@@ -507,6 +508,8 @@
     <script src="{{ asset('assets/js/tiny-slider.js') }}"></script>
     <script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    @stack('scripts')
+
     <script type="text/javascript">
         //========= Hero Slider
         tns({
@@ -547,6 +550,8 @@
             }
         });
     </script>
+
+
 </body>
 
 </html>
