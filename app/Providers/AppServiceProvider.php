@@ -25,6 +25,6 @@ class AppServiceProvider extends ServiceProvider
             return !in_array(strtolower($value), $params);
         }, "This name is prohibited");
 
-        Paginator::useBootstrapFive();
+        Paginator::useBootstrapFour();
     }
 }
