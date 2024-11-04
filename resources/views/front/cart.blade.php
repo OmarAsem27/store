@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-lg-2 col-md-2 col-12">
                                 <div class="count-input">
-                                    <input class="form-control" value="{{ $item->quantity }}" />
+                                    <input class="form-control item-quantity" value="{{ $item->quantity }}" />
 
                                 </div>
                             </div>
