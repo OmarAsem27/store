@@ -50,24 +50,24 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, CartRepository $cart)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'product_id' => 'required|int|exists:products,id',
-            'quantity' => 'nullable|int|min:1'
+            'quantity' => 'required|int|min:1'
         ]);
-        $product = Product::findOrFail($request->post('product_id'));
+        // $product = Product::findOrFail($request->post('product_id'));
         // $repository = new CartModelRepository();
-        $cart->update($product, $request->post('quantity'));
+        $this->cart->update($id, $request->post('quantity'));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(CartRepository $cart, string $id)
+    public function destroy(string $id)
     {
         // $repository = new CartModelRepository();
-        $cart->delete($id);
+        $this->cart->delete($id);
+        return ['message' => 'Item Deleted!'];
     }
 
 }
