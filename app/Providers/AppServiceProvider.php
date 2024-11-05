@@ -34,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         // Event::listen('orderCreated', deductProductQuantity::class, );
         // Event::listen('orderCreated', EmptyCart::class);
         // Event::listen(OrderCreated::class, deductProductQuantity::class );
+
         Event::listen(OrderCreated::class, EmptyCart::class);
 
     }
