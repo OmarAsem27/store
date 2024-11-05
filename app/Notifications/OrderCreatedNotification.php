@@ -29,7 +29,19 @@ class OrderCreatedNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['mail', 'database'];
+        $channerls = ['database'];
+        if ($notifiable->notification_preference['order_created']['sms'] ?? false) {
+            $channerls[] = 'vonage';
+        }
+        if ($notifiable->notification_preference['order_created']['mail'] ?? false) {
+            $channerls[] = 'mail';
+        }
+        if ($notifiable->notification_preference['order_created']['broadcast'] ?? false) {
+            $channerls[] = 'broadcast';
+        }
+
+        return $channerls;
     }
 
     /**
@@ -46,6 +58,16 @@ class OrderCreatedNotification extends Notification
             ->line('Thank you for using our application!');
     }
 
+    public function toDatabase($notifiable)
+    {
+        $addr = $this->order->billingAddress;
+        return [
+            'body' => "A new order (#{$this->order->number}) created by {$addr->name} from {$addr->country_name}.",
+            'icon' => 'fas fa-file',
+            'url' => url('/dashboard'),
+            'order_id' => $this->order->id,
+        ];
+    }
     /**
      * Get the array representation of the notification.
      *
