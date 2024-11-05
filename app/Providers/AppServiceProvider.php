@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Listeners\deductProductQuantity;
+use App\Listeners\EmptyCart;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,5 +29,9 @@ class AppServiceProvider extends ServiceProvider
         }, "This name is prohibited");
 
         Paginator::useBootstrapFour();
+
+        Event::listen('orderCreated', deductProductQuantity::class, );
+        Event::listen('orderCreated', EmptyCart::class);
+
     }
 }
