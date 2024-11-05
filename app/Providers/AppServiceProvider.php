@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\OrderCreated;
 use App\Listeners\deductProductQuantity;
 use App\Listeners\EmptyCart;
 use Illuminate\Pagination\Paginator;
@@ -30,8 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
         Paginator::useBootstrapFour();
 
-        Event::listen('orderCreated', deductProductQuantity::class, );
-        Event::listen('orderCreated', EmptyCart::class);
+        // Event::listen('orderCreated', deductProductQuantity::class, );
+        // Event::listen('orderCreated', EmptyCart::class);
+        // Event::listen(OrderCreated::class, deductProductQuantity::class );
+        Event::listen(OrderCreated::class, EmptyCart::class);
 
     }
 }
