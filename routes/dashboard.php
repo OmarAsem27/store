@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::group([
-    'middleware' => ['auth', 'authType:super-admin'],
+    'middleware' => ['auth', 'authType:super-admin,admin'],
     // 'middleware' => ['auth', 'authType:super-admin,admin'],
     'as' => 'dashboard.',
     'prefix' => 'dashboard',
