@@ -18,7 +18,7 @@ class UpdateUserLastActiveAt
     {
         $user = $request->user();
         // dd($user);
-        if ($user) {
+        if ($user instanceof \App\Models\User) {
             $user->forceFill([
                 'last_active_at' => Carbon::now()
             ])->save();
