@@ -35,6 +35,6 @@ Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
 
 Route::post('checkout', [CheckoutController::class, 'store']);
 
-require __DIR__ . '/auth.php';
+// require __DIR__ . '/auth.php';
 
 require __DIR__ . '/dashboard.php';
