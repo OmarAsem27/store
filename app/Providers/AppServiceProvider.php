@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Events\OrderCreated;
 use App\Listeners\deductProductQuantity;
 use App\Listeners\EmptyCart;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        JsonResource::withoutWrapping(); // for the whole application
+
         Validator::extend('filter', function ($attributes, $value, $params) {
             return !in_array(strtolower($value), $params);
         }, "This name is prohibited");
