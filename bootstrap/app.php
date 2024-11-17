@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckApiToken;
 use App\Http\Middleware\MarkNotificationAsRead;
 use App\Http\Middleware\UpdateUserLastActiveAt;
 use Illuminate\Foundation\Application;
@@ -19,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(UpdateUserLastActiveAt::class);
         $middleware->web(MarkNotificationAsRead::class);
-
+        $middleware->api( CheckApiToken::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

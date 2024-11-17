@@ -39,12 +39,14 @@ class ProductsController extends Controller
 
         $user = $request->user();
         if (!$user->tokenCan('products.create')) {
-            abort(403, 'Not allowed');
+            return response(['message' => 'Not allowed'], 403);
         }
 
         $product = Product::create($request->all());
 
-        return $product;
+        return Response::json($product, 201, [
+            'Location' => route('products.show', $product->id),
+        ]);
     }
 
     /**
@@ -71,7 +73,7 @@ class ProductsController extends Controller
         ]);
         $user = $request->user();
         if (!$user->tokenCan('products.update')) {
-            abort(403, 'Not allowed');
+            return response(['message' => 'Not allowed'], 403);
         }
         $product->update($request->all());
 
