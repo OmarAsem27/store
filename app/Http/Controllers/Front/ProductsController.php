@@ -13,6 +13,7 @@ class ProductsController extends Controller
     {
 
     }
+    // public function show($locale, Product $product)
     public function show(Product $product)
     {
         if ($product->status != 'active') {

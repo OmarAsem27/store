@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\CheckApiToken;
 use App\Http\Middleware\MarkNotificationAsRead;
+use App\Http\Middleware\SetAppLocale;
 use App\Http\Middleware\UpdateUserLastActiveAt;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -20,7 +21,15 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->web(UpdateUserLastActiveAt::class);
         $middleware->web(MarkNotificationAsRead::class);
-        $middleware->api( CheckApiToken::class);
+        // $middleware->web(SetAppLocale::class);
+        $middleware->api(CheckApiToken::class);
+        $middleware->alias([
+            'localize' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRoutes::class,
+            'localizationRedirect' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationRedirectFilter::class,
+            'localeSessionRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleSessionRedirect::class,
+            'localeCookieRedirect' => \Mcamara\LaravelLocalization\Middleware\LocaleCookieRedirect::class,
+            'localeViewPath' => \Mcamara\LaravelLocalization\Middleware\LaravelLocalizationViewPath::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

@@ -8,8 +8,7 @@ use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 // Route::get('/dash', function () {
 //     return view('welcome');
@@ -26,19 +25,28 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
+Route::group([
+    'prefix' => LaravelLocalization::setLocale()],
+    function () {
+        Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/products/{product:slug}', [ProductsController::class, 'show'])->name('products.show');
+        Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
 
-Route::resource('cart', CartController::class);
+        Route::get('/products/{product:slug}', [ProductsController::class, 'show'])->name('products.show');
 
-Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
+        Route::resource('cart', CartController::class);
 
-Route::post('checkout', [CheckoutController::class, 'store']);
+        Route::get('checkout', [CheckoutController::class, 'create'])->name('checkout');
 
-Route::get('auth/user/2fa', [TwoFactorAuthenticationController::class, 'index'])
-    ->name('front.2fa');
-    
+        Route::post('checkout', [CheckoutController::class, 'store']);
+
+        Route::get('auth/user/2fa', [TwoFactorAuthenticationController::class, 'index'])
+            ->name('front.2fa');
+    }
+);
+
+
+
 // require __DIR__ . '/auth.php';
 
 require __DIR__ . '/dashboard.php';

@@ -7,6 +7,7 @@ use App\Listeners\deductProductQuantity;
 use App\Listeners\EmptyCart;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\ServiceProvider;
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        App::setLocale(request('locale','en'));
         JsonResource::withoutWrapping(); // for the whole application
 
         Validator::extend('filter', function ($attributes, $value, $params) {
