@@ -43,6 +43,12 @@ class AppServiceProvider extends ServiceProvider
 
         Event::listen(OrderCreated::class, EmptyCart::class);
 
+        // Gate::before(function ($user, $ability) {
+        //     if ($user->super_admin) {
+        //         return true;
+        //     }
+        // });
+
         // foreach (config('abilities') as $ability_key => $ability_name) {
         foreach (app('abilities') as $ability_key => $ability_name) {
             Gate::define($ability_key, function ($user) use ($ability_key) {

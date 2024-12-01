@@ -24,7 +24,7 @@ return [
         'ability' => 'products.view',
     ],
     [
-        'icon' => 'nav-icon far fa-circle',
+        'icon' => 'nav-icon fas fa-receipt',
         'link' => 'dashboard.categories.index',
         'title' => 'Orders',
         'active' => 'dashboard.orders.*',
@@ -37,5 +37,18 @@ return [
         'active' => 'dashboard.roles.*',
         'ability' => 'roles.view',
     ],
-
+    [
+        'icon' => 'nav-icon fas fa-users',
+        'link' => 'dashboard.users.index',
+        'title' => 'Users',
+        'active' => 'dashboard.users.*',
+        'ability' => 'users.view',
+    ],
+    [
+        'icon' => 'nav-icon fas fa-users',
+        'link' => 'dashboard.admins.index',
+        'title' => 'Admins',
+        'active' => 'dashboard.admins.*',
+        'ability' => 'admins.view',
+    ],
 ];

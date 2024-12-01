@@ -21,6 +21,6 @@ class AbilitiesServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // \Log::info('AbilitiesServiceProvider booted');
     }
 }

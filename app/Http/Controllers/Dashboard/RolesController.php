@@ -3,17 +3,28 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+// use Illuminate\Routing\Controller;
 use App\Models\Role;
 use App\Models\RoleAbility;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
 {
+    // use AuthorizesRequests;
+
+    // public function __construct()
+    // {
+    //     Gate::authorizeResource(Role::class, 'role');
+    // }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        Gate::authorize('viewAny', Role::class); // takes the function name of the policy
         $roles = Role::paginate();
         return view('dashboard.roles.index', compact('roles'));
     }
@@ -23,6 +34,7 @@ class RolesController extends Controller
      */
     public function create()
     {
+        Gate::authorize('create', Role::class); // takes the function name of the policy
         return view('dashboard.roles.create', ['role' => new Role()]);
     }
 
@@ -31,6 +43,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('create', Role::class); // takes the function name of the policy
         $request->validate([
             'name' => 'required|string|max:255',
             'abilities' => 'required|array',
@@ -45,6 +58,8 @@ class RolesController extends Controller
      */
     public function show(string $id)
     {
+        $role = Role::findOrFail($id);
+        Gate::authorize('view', $role); // takes the function name of the policy
     }
 
     /**
@@ -52,6 +67,7 @@ class RolesController extends Controller
      */
     public function edit(Role $role)
     {
+        Gate::authorize('update', $role); // takes the function name of the policy
         $role_abilities = $role->abilities()->pluck('type', 'ability')->toArray();
         return view('dashboard.roles.edit', compact('role', 'role_abilities'));
     }
@@ -61,6 +77,7 @@ class RolesController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        Gate::authorize('update', $role); // takes the function name of the policy
         $request->validate([
             'name' => 'required|string|max:255',
             'abilities' => 'required|array',
@@ -75,7 +92,9 @@ class RolesController extends Controller
      */
     public function destroy(string $id)
     {
-        Role::destroy($id);
+        $role = Role::findOrFail($id);
+        Gate::authorize('update', $role); // takes the function name of the policy
+        $role->delete();
         return redirect()->route('dashboard.roles.index')->with('success', 'Role Deleted Successfully!');
     }
 }

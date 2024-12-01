@@ -7,15 +7,19 @@ use App\Models\Product;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        Gate::authorize('viewAny', Product::class); // takes the function name of the policy
+
         // if (Auth::user()->store_id) {
         //     $products = Product::where('store_id', Auth::user()->store_id)->paginate();
         // } else {
@@ -31,7 +35,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        Gate::authorize('create', Product::class); // takes the function name of the policy
     }
 
     /**
@@ -39,7 +43,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Gate::authorize('create', Product::class); // takes the function name of the policy
     }
 
     /**
@@ -47,7 +51,8 @@ class ProductController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        Gate::authorize('view', $product); // takes the function name of the policy
     }
 
     /**
@@ -56,6 +61,8 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $product = Product::findOrFail($id);
+        Gate::authorize('update', $product); // takes the function name of the policy
+
         $tags = implode(',', $product->tags()->pluck('name')->toArray());
         return view('dashboard.products.edit', compact('product', 'tags'));
     }
@@ -65,6 +72,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        Gate::authorize('update', $product); // takes the function name of the policy
+
         $product->update($request->except('tags'));
         $tags = json_decode($request->post('tags'));
         // dd(json_decode($request->post('tags')));
@@ -93,6 +102,7 @@ class ProductController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Product::findOrFail($id);
+        Gate::authorize('update', $product); // takes the function name of the policy
     }
 }
