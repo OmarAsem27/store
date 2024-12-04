@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Front\Auth\TwoFactorAuthenticationController;
 use App\Http\Controllers\Front\CartController;
@@ -7,6 +8,7 @@ use App\Http\Controllers\Front\CheckoutController;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SocialController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -25,8 +27,10 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 //     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 // });
 
-Route::group([
-    'prefix' => LaravelLocalization::setLocale()],
+Route::group(
+    [
+        'prefix' => LaravelLocalization::setLocale()
+    ],
     function () {
         Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -45,8 +49,12 @@ Route::group([
     }
 );
 
+Route::get('auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])
+    ->name('auth.socialite.redirect');
+Route::get('auth/{provider}/callback', [SocialLoginController::class, 'callback'])
+    ->name('auth.socialite.callback');
 
-
+Route::get('auth/{provider}/user',[SocialController::class,'index']);
 // require __DIR__ . '/auth.php';
 
 require __DIR__ . '/dashboard.php';
