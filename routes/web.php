@@ -10,6 +10,7 @@ use App\Http\Controllers\Front\PaymentsController;
 use App\Http\Controllers\Front\ProductsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\StripeWebhookController;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
@@ -66,6 +67,7 @@ Route::post('orders/{order}/stripe/payment-intent', [PaymentsController::class, 
 Route::get('orders/{order}/pay/stripe/callback', [PaymentsController::class, 'confirm'])
     ->name('stripe.return');
 
+Route::any('stripe/webhook',[StripeWebhookController::class, 'handleStripeWebhook']);
 
 // require __DIR__ . '/auth.php';
 

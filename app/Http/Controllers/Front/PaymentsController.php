@@ -16,7 +16,7 @@ class PaymentsController extends Controller
 
     public function createStripePaymentIntent(Order $order)
     {
-        dd($order->products);
+        // dd($order->products);
         $amount = $order->items->sum(function ($item) {
             return $item->quantity * $item->price;
         });
