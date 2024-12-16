@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\DeliveryLocationUpdated;
 use App\Http\Controllers\Controller;
 use App\Models\Delivery;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ class DeliveriesController extends Controller
         ]);
 
         $delivery->update(['longitude' => $request->longitude, 'latitude' => $request->latitude]);
+        event(new DeliveryLocationUpdated($delivery, $request->longitude, $request->latitude));
         return $delivery;
     }
 

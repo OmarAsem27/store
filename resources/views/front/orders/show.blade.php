@@ -33,18 +33,47 @@
         </div>
     </section>
 
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+    <script>
+        // map and marker variables are global
+        var map, marker;
+
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        // PUSHER_APP_KEY and Cluster
+        var pusher = new Pusher('{{ config('broadcasting.connections.pusher.key') }}', {
+            cluster: '{{ config('broadcasting.connections.pusher.options.cluster') }}',
+            channelAuthorization: {
+                endpoint: "/broadcasting/auth",
+                headers: {
+                    "X-CSRF-Token": "{{ csrf_token() }}"
+                },
+            },
+        });
+
+        var channel = pusher.subscribe('private-deliveries.{{ $order->id }}');
+        channel.bind('location-updated', function(data) {
+            marker.position = {
+                lat: Number(data.latitude),
+                lng: Number(data.longitude)
+            };
+        });
+    </script>
+
     <script>
         // Initialize and add the map
-        let map;
+        // let map;
 
         async function initMap() {
             // The location of Order
             const position = {
-                lat: {{ $delivery->latitude }},
-                lng: {{ $delivery->longitude }}
+                lat: Number("{{ $delivery->latitude }}"),
+                lng: Number("{{ $delivery->longitude }}")
             };
-            // Request needed libraries.
-            //@ts-ignore
+            // // Request needed libraries.
+            // //@ts-ignore
             const {
                 Map
             } = await google.maps.importLibrary("maps");
@@ -60,7 +89,7 @@
             });
 
             // The marker, positioned at Order
-            const marker = new AdvancedMarkerElement({
+            marker = new AdvancedMarkerElement({
                 map: map,
                 position: position,
                 title: "Order",
